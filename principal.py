@@ -9,13 +9,13 @@ class MoveCanvas(tk.Canvas):
         self.velocidade = 3
         self.deslocou = 0
         #self.box = self.create_rectangle(0, 0, 20, 20, fill="black")
+        self.pistaPos = 400
+        self.pista0 = self.create_image(self.pistaPos, -128, image=img_pista)
+        self.pista1 = self.create_image(self.pistaPos, 128, image=img_pista)
+        self.pista2 = self.create_image(self.pistaPos, 384, image=img_pista)
+        self.pista3 = self.create_image(self.pistaPos, 640, image=img_pista)
 
-        self.pista0 = self.create_image(400, -128, image=img_pista)
-        self.pista1 = self.create_image(400, 128, image=img_pista)
-        self.pista2 = self.create_image(400, 384, image=img_pista)
-        self.pista3 = self.create_image(400, 640, image=img_pista)
-
-        self.box1 = self.create_image(420, 520, image=img_car)
+        self.carro = self.create_image(420, 520, image=img_car)
  
         self.dt = 25
         self.tick()
@@ -25,22 +25,18 @@ class MoveCanvas(tk.Canvas):
 
         self.deslocou += self.velocidade
 
-        self.move(self.pista0, self.dx, self.velocidade)
-        self.move(self.pista1, self.dx, self.velocidade)
-        self.move(self.pista2, self.dx, self.velocidade)
-        self.move(self.pista3, self.dx, self.velocidade)
-            
-        print(self.coords(self.pista3)[1])
+        self.move(self.pista0, 0, self.velocidade)
+        self.move(self.pista1, 0, self.velocidade)
+        self.move(self.pista2, 0, self.velocidade)
+        self.move(self.pista3, 0, self.velocidade)
+        maximo = 768
+        regresso = 896
+        if ((self.coords(self.pista3)[1]) >= maximo): self.move(self.pista3,0, -regresso)
+        if ((self.coords(self.pista2)[1]) >= maximo): self.move(self.pista2,0, -regresso)
+        if ((self.coords(self.pista1)[1]) >= maximo): self.move(self.pista1,0, -regresso)
+        if ((self.coords(self.pista0)[1]) >= maximo): self.move(self.pista0,0, -regresso)
 
-        maximo = 896
-        regresso = 128
-
-        if ((self.coords(self.pista3)[1]) >= maximo): self.move(self.pista3,self.dx, -self.coords(self.pista3)[1] -regresso)
-        if ((self.coords(self.pista2)[1]) >= maximo): self.move(self.pista2,self.dx, -self.coords(self.pista2)[1] -regresso)
-        if ((self.coords(self.pista1)[1]) >= maximo): self.move(self.pista1,self.dx, -self.coords(self.pista1)[1] -regresso)
-        if ((self.coords(self.pista0)[1]) >= maximo): self.move(self.pista0,self.dx, -self.coords(self.pista0)[1] -regresso)
-
-        if (self.velocidade == 0): self.move(self.box1, self.dx, self.velocidade)
+        self.move(self.carro, self.dx, 0)
 
         self.after(self.dt, self.tick)
  
