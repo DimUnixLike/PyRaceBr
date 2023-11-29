@@ -6,7 +6,7 @@ class MoveCanvas(tk.Canvas):
         super().__init__(*args, **kwargs)
         self.dx = 0
         self.dy = 0
-        self.velocidade = 3
+        self.velocidade = 0
         self.deslocou = 0
         #self.box = self.create_rectangle(0, 0, 20, 20, fill="black")
         self.pistaPos = 400
@@ -22,7 +22,7 @@ class MoveCanvas(tk.Canvas):
       
     def tick(self):
         if (self.dy == 1): self.velocidade += 0.1
-
+        if (self.dy == -1): self.velocidade -=0.1
         self.deslocou += self.velocidade
 
         self.move(self.pista0, 0, self.velocidade)
