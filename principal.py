@@ -1,4 +1,5 @@
 import tkinter as tk
+import pathlib as pl
   
 class MoveCanvas(tk.Canvas):
  
@@ -21,8 +22,10 @@ class MoveCanvas(tk.Canvas):
         self.tick()
       
     def tick(self):
-        if (self.dy == 1): self.velocidade += 0.1
-        if (self.dy == -1): self.velocidade -=0.1
+
+        if (self.dy == 1): self.velocidade += 0.01
+        if (self.dy == -1 and self.velocidade > 0): self.velocidade -= 0.01 
+        if (self.velocidade < 0): self.velocidade = 0
         self.deslocou += self.velocidade
 
         self.move(self.pista0, 0, self.velocidade)
@@ -52,10 +55,10 @@ if __name__ == "__main__":
     root.geometry("800x600")
     root.title("Dim Game")
 
-    img_path = "/home/um/Área de Trabalho/python/mygame/"
+    img_path = str(pl.Path().absolute())
     #img_padrao = tk.PhotoImage(file = img_path + "")
-    img_car = tk.PhotoImage(file = img_path + "car00.png")
-    img_pista = tk.PhotoImage(file = img_path + "pista.png")
+    img_car = tk.PhotoImage(file = img_path + "/car00.png")
+    img_pista = tk.PhotoImage(file = img_path + "/pista.png")
 
 
     cvs = MoveCanvas(root, bg="green")
